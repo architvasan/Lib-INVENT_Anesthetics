@@ -1,0 +1,90 @@
+{
+    "logging": {
+        "job_id": " ",
+        "job_name": "RL Demo QSAR",
+        "logging_path": "/Users/architvasan/Desktop/Code/Lib-INVENT_Anesthetics/tutorial/output/run.log",
+        "recipient": "local",
+        "sender": " "
+    },
+    "parameters": {
+        "actor": "/Users/architvasan/Desktop/Code/Lib-INVENT_Anesthetics/tutorial/trained_models/reaction_based.model",
+        "batch_size": 128,
+        "critic": "/Users/architvasan/Desktop/Code/Lib-INVENT_Anesthetics/tutorial/trained_models/reaction_based.model",
+        "learning_rate": 0.0001,
+        "learning_strategy": {
+            "name": "DAP",
+            "parameters": {
+                "sigma": 120
+            }
+        },
+        "n_steps": 100,
+        "randomize_scaffolds": true,
+        "scaffolds": [
+            "[*:0]N1CCN(CC1)CCCCN[*:1]"
+        ],
+        "scoring_strategy": {
+            "diversity_filter": {
+                "name": "NoFilterWithPenalty"
+            },
+            "name": "standard",
+            "reaction_filter": {
+                "reactions": {},
+                "type": "selective"
+            },
+            "scoring_function": {
+                "name": "custom_sum",
+                "parallel": false,
+                "parameters": [
+                    {
+                        "component_type": "predictive_property",
+                        "model_path": "/Users/architvasan/Desktop/Code/Lib-INVENT_Anesthetics/tutorial/tutorial/models/DRD2_predictive_model/drd2.pkl",
+                        "name": "DRD2",
+                        "smiles": [],
+                        "specific_parameters": {
+                            "descriptor_type": "ecfp",
+                            "radius": 3,
+                            "scikit": "classification",
+                            "size": 2048,
+                            "transformation": false,
+                            "transformation_type": "no_transformation"
+                        },
+                        "weight": 1
+                    },
+                    {
+                        "component_type": "custom_alerts",
+                        "model_path": null,
+                        "name": "Custom alerts",
+                        "smiles": [
+                            "[*;r8]",
+                            "[*;r9]",
+                            "[*;r10]",
+                            "[*;r11]",
+                            "[*;r12]",
+                            "[*;r13]",
+                            "[*;r14]",
+                            "[*;r15]",
+                            "[*;r16]",
+                            "[*;r17]",
+                            "[#8][#8]",
+                            "[#6;+]",
+                            "[#16][#16]",
+                            "[#7;!n][S;!$(S(=O)=O)]",
+                            "[#7;!n][#7;!n]",
+                            "C#C",
+                            "C(=[O,S])[O,S]",
+                            "[#7;!n][C;!$(C(=[O,N])[N,O])][#16;!s]",
+                            "[#7;!n][C;!$(C(=[O,N])[N,O])][#7;!n]",
+                            "[#7;!n][C;!$(C(=[O,N])[N,O])][#8;!o]",
+                            "[#8;!o][C;!$(C(=[O,N])[N,O])][#16;!s]",
+                            "[#8;!o][C;!$(C(=[O,N])[N,O])][#8;!o]",
+                            "[#16;!s][C;!$(C(=[O,N])[N,O])][#16;!s]"
+                        ],
+                        "specific_parameters": null,
+                        "weight": 1
+                    }
+                ]
+            }
+        }
+    },
+    "run_type": "reinforcement_learning"
+}
